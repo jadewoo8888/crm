@@ -103,6 +103,33 @@ public class CustInfoController extends BaseController {
 	 * @param page
 	 * @throws Exception
 	 */
+	@RequestMapping(value="/myCustlist")
+	public ModelAndView myCustlist(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表myCustlist");
+		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);	
+		pd.put("CUSTOMER_MANAGER_ID", user.getUSER_ID());
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		page.setPd(pd);
+		List<PageData>	varList = custinfoService.myCustlist(page);	//列出CustInfo列表
+		mv.setViewName("crm/custinfo/my_cust_list");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	
+	/**列表
+	 * @param page
+	 * @throws Exception
+	 */
 	@RequestMapping(value="/list")
 	public ModelAndView list(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表CustInfo");

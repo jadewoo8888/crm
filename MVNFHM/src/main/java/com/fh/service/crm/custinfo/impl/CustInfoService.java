@@ -57,6 +57,10 @@ public class CustInfoService implements CustInfoManager{
 		return (List<PageData>)dao.findForList("CustInfoMapper.datalistPage", page);
 	}
 	
+	public List<PageData> myCustlist(Page page)throws Exception {
+		return (List<PageData>)dao.findForList("CustInfoMapper.myCustlistPage", page);
+	}
+	
 	/**列表(全部)
 	 * @param pd
 	 * @throws Exception

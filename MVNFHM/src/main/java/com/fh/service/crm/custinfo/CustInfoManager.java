@@ -30,6 +30,7 @@ public interface CustInfoManager{
 	 */
 	public void edit(PageData pd)throws Exception;
 	
+	public List<PageData> myCustlist(Page page)throws Exception;
 	/**列表
 	 * @param page
 	 * @throws Exception
